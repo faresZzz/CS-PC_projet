@@ -1,0 +1,25 @@
+Comme convenu, veuillez trouver en pièce jointe un fichier test avec quelques éléments de la facturation.
+L'objectif est de vérifier que vous pouvez le lire et à partir des données transmises commencer à mettre en forme les factures au format PDF.
+
+Structure du fichier
+
+Réf client    4 car
+Séparation    "!"
+
+Nom client  29 car
+Séparation    "!"
+
+date facture  8 car
+Séparation    "!"
+
+montant HT   11 car
+Séparation    "!"
+
+type client    2 car
+Séparation    "!"
+
+representant   2 car
+Séparation    "!"
+
+Cordialement,
+Christian Angot

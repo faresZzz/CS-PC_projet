@@ -1,0 +1,158 @@
+<html>
+	<head>
+		<style>
+		body {font-family: FreeSans;
+			font-size: 11pt;
+		}
+		p {	margin: 0pt; }
+		table.items {
+			border: 0.1mm solid #000000;
+		}
+		td { vertical-align: top; }
+		.items td {
+			border-left: 0.1mm solid #000000;
+			border-right: 0.1mm solid #000000;
+		}
+		table thead td { background-color: #EEEEEE;
+			text-align: center;
+			border: 0.1mm solid #000000;
+			font-variant: small-caps;
+		}
+		.items td.blanktotal {
+			background-color: #EEEEEE;
+			border: 0.1mm solid #000000;
+			background-color: #FFFFFF;
+			border: 0mm none #000000;
+			border-top: 0.1mm solid #000000;
+			border-right: 0.1mm solid #000000;
+		}
+		.items td.totals {
+			text-align: right;
+			vertical-align: top;
+			border: 0.1mm solid #000000;
+			font-size: 9px;
+		}
+		.items td.cost {
+			text-align: "." center;
+		}
+
+		.blanktotal {
+			vertical-align: top;
+			text-align:center;
+			font-size: 9px;
+		}
+
+		.border1 {
+			border-bottom: 1px solid #888888
+		}
+		.Type {
+			text-align: center;
+			width:40%;
+			font-size:20px;
+		}
+
+		.center {
+			text-align:center !important;
+		}
+		.SousTotal {
+			background-color: #EEEEEE;
+			font: italic bold;
+			text-align:center;
+		}
+		</style>
+	</head>
+<body>
+
+<!--mpdf
+<htmlpageheader name="myheader">
+<table width="100%">
+	<tr>
+		<td width="50%" style="color:black;font-size: 14pt;"><span style="font-weight: bold;">BLANCHISSERIE MORELLON</span><br />2, Allée des Artisans<br />69210 LENTILLY<br /><span style="font-family:dejavusanscondensed;">&#9742;</span> 04.74.01.91.60<br/>info@blancgisseriemorellon.com</td>
+		<td class="Type"><b>Facture</b><br/> n° : <span>{{@NumFacture}}</span><hr><span>Date : {{@DateFacture}}</span><br />Échéance : {{@DateEcheance}}<br /><span>Page {PAGENO} / {nb}<span></td>
+	</tr>
+</table>
+</htmlpageheader>
+
+<htmlpagefooter name="myfooter">
+	<div style="border-top: 1px solid #000000; font-size: 5pt; text-align: center; padding-top: 3mm; ">
+		<p>BLANCHISSERIE MORELLON</p>
+		<p>Tout professionnel en situation de retard de paiement sera de plein droit débiteur, à l'égard du créancier, d'une indemnité forfaitaire pour frais de recouvrement de 40 euros. (décret n° 2012-1115 du 2 octobre 2012.).</p>
+		<p>Notre droit de revendication porte aussi bien sur les marchandises que sur leur prix si elles ont déjà été revendues - Loi du 12 mai 1980.</p>
+		<p>Nous n'accordons pas d'escompte en cas de paiement anticipé.TVA acquittée sur les encaissements.</p>
+	</div>
+</htmlpagefooter>
+
+<sethtmlpageheader name="myheader" value="on" show-this-page="1" />
+<sethtmlpagefooter name="myfooter" value="on" />
+mpdf-->
+
+<table width="100%" cellpadding="5">
+<tr>
+	<td width="45%" style="border: 0.1mm solid #888888;">Adresse de livraison : <br/><hr>{{@NomClient}}<br/>{{@Adresse}}<br/>{{@Cp}}{{@Ville}}</td>
+	<td width="10%" style="border:none">&nbsp;</td>
+	<td width="45%" style="border: 0.1mm solid #888888;">Adresse de facturation : <br/><hr>{{@NomClient}}<br/>{{@Adresse}}<br/>{{@Cp}}{{@Ville}}</td>
+</tr>
+</table>
+
+<br/><br/>
+
+<table class="items" width="100%" style="font-size: 10pt; border-collapse: collapse;" cellpadding="5">
+	<tr>
+		<td width="100%" style="border: 0.1mm solid #888888;">Observation : {{ @Observation }}</td>		
+		<repeat group="{{ @LigneBL }}" key="{{ @ikey }}" value="{{ @idiv }}">
+			<td width="100%" style="border: 0.1mm solid #888888;">{{ @idiv[1] }}</td>
+		</repeat>
+	</tr>
+</table>
+<br/>
+
+<table class="items" width="100%" style="font-size: 8pt; border-collapse: collapse;" cellpadding="3">
+	<thead>
+		<tr>
+			<td width="60%">Description de la prestation</td>
+			<td width="3%">Q.</td>
+			<td width="5%">P.U HT</td>
+			<td width="5%">TOTAL HT</td>
+		</tr>
+	</thead>
+	<tbody>
+	<!-- ITEMS HERE -->
+	<repeat group="{{ @Corps }}" key="{{ @ikey }}" value="{{ @idiv }}">
+		<tr>
+			<td class="border1">{{ @idiv[2] }}</td>
+			<td align="center">{{ @idiv[1] }}</td>
+			<td align="center">{{ @idiv[4] }}</td>
+			<td width="5%">{{ @idiv[5] }}</td>
+		</tr>
+			{~ @TOTALHT += {{ sprintf('%0.2f',@idiv[5]) }} ~}				
+	</repeat>
+	<!-- END ITEMS HERE -->
+		<tr>
+			<td class="blanktotal" colspan="2" rowspan="6">
+			</td>
+			<td style="background-color: #EEEEEE" class="totals"><b>TOTAL HT</b></td>
+			<td class="totals"><b>{{sprintf('%0.2f',@TOTALHT) }} €</b></td>
+		</tr>
+		<tr>
+			<td style="background-color: #EEEEEE" class="totals"><b>PORT HT</b></td>
+			<td class="totals"><b>{{sprintf('%0.2f',@Port) }} €</b></td>
+		</tr>
+		<tr>
+			<td style="background-color: #EEEEEE" class="totals"><b>SOUS-TOTAL HT</b></td>
+			{~ @STOTALT = {{ sprintf('%0.2f',@TOTALHT+@Port) }} ~}	
+			<td class="totals"><b>{{sprintf('%0.2f',@TOTALHT+@Port) }} €</b></td>
+		</tr>			
+		<tr>	
+			<td style="background-color: #EEEEEE" class="totals"><b>TVA 20%</b></td>
+			{~ @TVA20 = {{ sprintf('%0.2f',(@STOTALT*1.20)-(@STOTALT)) }} ~}	
+			<td class="totals"><b>{{ sprintf('%0.2f',@TVA20) }} €</b></td>
+		</tr>
+		<tr>
+			<td style="background-color: #EEEEEE" class="totals"><b>TOTAL TTC</b></td>
+			{~ @TOTAL = round( @STOTALT+@TVA20, 2, PHP_ROUND_HALF_EVEN ) ~}	
+			<td class="totals"><b>{{ sprintf('%0.2f',@TOTAL) }} €</b></td>
+		</tr>		
+	</tbody>
+</table>
+</body>
+</html>

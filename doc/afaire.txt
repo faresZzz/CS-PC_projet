@@ -1,0 +1,24 @@
+page login style cabinet 88 avec  seul user admin donc en dure dans le code             //
+
+ensuite page liste facture  deja faites                                                 //
+plus bouton pour ajouter nouvelle facture pour telecharger la nouvelle facture          //
+genere le pdf et enregistrement dans une basse de donnée                                //
+numero client                                                                           //
+N facture                                                                               //
+date facture                                                                            //
+nom client                                                                              //
+nom facture pour pouvoir la retrouver comme cabinet 88                                  //
+
+nom du chiciher pdf ajouter une random pour en cree un nouveau a chaque fois            //
+embellir les pages
+liste facutre, ajouter la possibilité de la telecharger/visionnner                      //
+
+liste facture bouton/ case a cocher pour envoyer par mail les factures                  //
+
+ajouter liste Factures base de donnee pour la date d'envoi de mail                      //
+petit plus sur la liste facture pour voir la date d'envoi du mail                       //
+logout                                                                                  //
+
+
+button "signaler un bug" -> au click capture d'écran  ouvre pop up avec image/commentaire evnoi mail a phenix
+Commentaire pre rempli URL SESSION IP + plus  comm client

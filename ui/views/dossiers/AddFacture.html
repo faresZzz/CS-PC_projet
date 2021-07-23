@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/ui/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css"/>
+    <script src="/ui/js/jquery.min.js"></script>
+    <script src="/ui/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/197d1cb87f.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <title>Nouvelle factures</title>
+</head>
+<body>
+
+  <header class="text-center mb-3">
+    <h1 style="font-size: 40px; color: black; margin-top: 5%"> BLANCHISSERIE MORELLON </h1>
+    <h3 style="font-size: 25px; color: black">Ajouter une nouvelle facture</h3>
+  </header>
+
+
+  <div class="container">
+      <form method="post" class="border p-4 d-flex justify-content-center mb-4" enctype="multipart/form-data">
+        <div  class="mb-3">
+          <label for="file" class="form-label" >Sélectionner le fichier à envoyer</label>
+          <input class="form-control" type="file" id="file" name="file" accept=".txt;.TXT">
+        </div>
+        <br>
+        <div class="col-auto">
+          <button class="btn btn-primary mb-3">Envoyer</button>
+        </div>
+      </form>
+
+
+      <check if ="{{@ErrorMessage}}">
+        <div>
+            <p>{{@ErrorMessage}} </p>
+        </div>
+      </check>
+
+      <check if ="{{@Validation}}">
+        <div>
+            <p>{{@Validation}} </p>
+        </div>
+      </check>
+  </div>
+
+
+</body>
+</html>

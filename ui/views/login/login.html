@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>BLANCHISSERIE MORELLON</title>
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/ui/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/ui/css/fontawesome.min.css" />
+    <link rel="stylesheet" href="/ui/css/fontawesome-solid.min.css" />
+    <link rel="stylesheet" href="/ui/css/login.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-4 d-none d-md-block left-login"></div>
+
+        <div class="col-md-8 right-login">
+          <div class="login" style="width: 100%">
+            <div class="card card-login mx-auto center">
+              <center>
+                    <div style="font-weight: bold; font-size: x-large" class="card-header">
+                    BLANCHISSERIE MORELLON
+                    </div>
+                    <div class="card-body">
+                        <form id="LoginForm" method="POST" action="/" autocomplete="off">
+
+                            <div class="form-group">
+                            <label for="Login">Utilisateur</label>
+                            <input class="form-control" id="Login" name="Login" type="text" autocomplete="off"/>
+                            </div>
+
+                            <div class="form-group">
+                            <label for="Password">Mot de passe</label>
+                            <input class="form-control" id="Password" name="Password" type="Password" autocomplete="off"/>
+                            </div>
+                            <input type="hidden" name="csrf" value="{{@SESSION.csrf}}"/>
+                            <div class="row">
+                                <div class="col-12">
+                                    <button id="Connexion" type="submit" class="btn btn-primary" data-style="expand-right">
+                                        <i class="fa fa-arrow-circle-right"></i> Se connecter
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                </center>
+              </div>
+              <check if ="{{@messageLogin}}">
+                  <div>
+                      <p>{{@messageLogin}} </p>
+                  </div>
+              </check>
+              <check if ="{{@messageInvalideInput}}">
+                <div>
+                    <p>{{@messageInvalideInput}} </p>
+                </div>
+            </check>
+              <!-- <F3:repeat group="{{ \Flash::instance()->getMessages() }}" value="{{ @msg }}">
+					<div class="row">
+						<div class="col-10 offset-1">
+							<div class="alert alert-{{ @msg.status }} alert-dismissable">
+								<center>
+								<marquee>{{ @msg.text | esc }}</marquee>
+								<center>
+							</div>
+						</div>
+					</div>
+					</F3:repeat> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/ui/js/jquery.min.js"></script>
+    <script src="/ui/js/bootstrap.min.js"></script>
+    <script>
+      function verticalAlignMiddle() {
+        var bodyHeight = $(window).height();
+        var formHeight = $(".login").height();
+        var marginTop = bodyHeight / 2 - formHeight / 2;
+        if (marginTop > 0) {
+          $(".login").css("margin-top", marginTop);
+          $(".secure").css("margin-top", marginTop + 10);
+        }
+      }
+      $(document).ready(function () {
+        verticalAlignMiddle();
+      });
+      $(window).bind("resize", verticalAlignMiddle);
+
+      $("#Connexion").on("click", function () {
+        var $this = $(this);
+        var loadingText =
+          '<i class="fas fa-spinner fa-pulse"></i> Chargement...';
+        if ($(this).html() !== loadingText) {
+          $this.data("original-text", $(this).html());
+          $this.html(loadingText);
+        }
+        setTimeout(function () {
+          $this.html($this.data("original-text"));
+        }, 2000);
+      });
+    </script>
+  </body>
+</html>

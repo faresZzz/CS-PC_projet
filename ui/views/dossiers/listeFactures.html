@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/ui/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.css"/>
+    <script src="/ui/js/jquery.min.js"></script>
+    <script src="/ui/js/bootstrap.min.js"></script>
+    <script src="https://kit.fontawesome.com/197d1cb87f.js"></script>
+    <script src="https://unpkg.com/bootstrap-table@1.18.2/dist/bootstrap-table.min.js"></script>
+    <script type="text/javascript" language="javascript" src="/ui/js/jquery.js">
+    </script>
+     <script type="text/javascript" language="javascript" src="/ui/js/html2canvas.min.js">
+    </script>
+    <script type="text/javascript" language="javascript" src="/ui/js/jquery.plugin.html2canvas.js">
+    </script>
+
+    <title>Liste Factures</title>
+</head>
+<body>
+
+    <header class="text-center mb-3">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h1 style="font-size: 40px; color: black; margin-top: 5%"> BLANCHISSERIE MORELLON </h1>
+                <h3 style="font-size: 25px; color: black">Liste des factures</h3>
+            </div >
+            <div class="col-md-2 offset-md-1">
+                <div class="d-flex flex-row-reverse bd-highlight mr-5 mt-5">
+                   <a href="/logout" class="btn btn-outline-dark" >Déconnexion</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="d-flex flex-row-reverse bd-highlight mr-5 mt-5">
+            <button id='signalerErreur' data-toggle="modal"  class="btn btn-outline-dark" >Signaler un bug</a>
+        </div>
+
+
+    </header>
+        <div class="modal" id="modalErreur">
+            <div class="modal-dialog">
+               <div class="modal-content">
+                  <!-- Modal Header -->
+                  <div class="modal-header">
+                     <h4 class="modal-title">Décrivez l'erreur </h4>
+                     <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  </div>
+                  <!-- Modal body -->
+                  <div class="modal-body">
+                    <div class="container">
+                          <div  class="mb-3">
+                            <textarea  type="textarea" rows="4" cols="50" id="description" name="description" ></textarea>
+                          </div>
+                          <br>
+                    </div>
+                  </div>
+                  <!-- Modal footer -->
+                  <div class="modal-footer">
+                      <div class="col-auto">
+                            <button id="EnvoiErreur" class="btn btn-primary ">Envoyer</button>
+                          </div>
+                     <button type="button" class="btn btn-danger" data-dismiss="modal">fermer</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+    <div class="d-flex flex-row-reverse bd-highlight mr-5">
+        <div class="p-2 bd-highlight">
+            <button id='AddFacture' data-toggle="modal"  data-target="#myModal" class="btn btn-info btn-sm">
+                <i class="fas fa-plus"> Ajouter</i>
+            </a>
+        </div>
+    </div>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+           <div class="modal-content">
+              <!-- Modal Header -->
+              <div class="modal-header">
+                 <h4 class="modal-title">Ajouter un fichier </h4>
+                 <button type="button" class="close" data-dismiss="modal">&times;</button>
+              </div>
+              <!-- Modal body -->
+              <div class="modal-body">
+                <div class="container">
+                    <form id="form"   method="POST" class="border p-4 d-flex justify-content-center mb-4" enctype="multipart/form-data">
+                      <div  class="mb-3">
+                        <label for="file" class="form-label" >Sélectionner le fichier à envoyer</label>
+                        <input class="form-control" type="file" id="file" name="file" accept=".txt;.TXT">
+                      </div>
+                      <br>
+
+                    </form>
+                </div>
+              </div>
+              <!-- Modal footer -->
+              <div class="modal-footer">
+                  <div class="col-auto">
+                        <button id="EnvoiForm" class="btn btn-primary ">Envoyer</button>
+                      </div>
+                 <button type="button" class="btn btn-danger" data-dismiss="modal">fermer</button>
+              </div>
+           </div>
+        </div>
+     </div>
+
+    <div class="fade-in container-fluid">
+        <div class="animated fadeIn">
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="actifs" role="tabpanel" aria-labelledby="actifs-tab">
+                    <table class="table" id="datatable-listeFactures" data-detail-view="true" data-striped="true" data-filter-control="true" data-filter-show-clear="false" data-show-refresh="false" data-search="true" data-show-pagination-switch="false" data-pagination="false">
+                        <thead>
+                            <tr>
+                                <th data-width="30px" data-halign="center" data-align="center" data-formatter="actionFormatter">Voir</th>
+                                <th data-checkbox="true"></th>
+                                <th data-field="NomClient" data-align="center" data-filter-control="input" data-sortable="true">Nom client</th>
+                                <th data-field="NumeroClient" data-align="center" data-filter-control="input" data-sortable="true">Numéro client</th>
+                                <th data-field="NomFacture" data-align="center" data-filter-control="input" data-sortable="true">Nom facture</th>
+                                <th data-field="NumeroFacture" data-align="center" data-filter-control="input" data-sortable="true">Numéro facture</th>
+                                <th data-field="DateFacture" data-align="center" data-filter-control="input" data-sortable="true">Date d'émission </th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-row-reverse bd-highlight mr-5">
+        <div class="p-2 bd-highlight">
+            <button  id="SendMasse" data-toggle="modal" class=" btn btn-info btn-sm">
+                <i class="fas fa-plus"> Envoyer</i>
+            </a>
+        </div>
+    </div>
+
+</body>
+
+
+<script src="/ui/js/bootbox.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function() {
+                $('#datatable-listeFactures').bootstrapTable({
+                    url: "/views/getFactures"
+                });
+    });
+
+    $("#datatable-listeFactures").on('expand-row.bs.table', async function (e, index, row, detail) {
+
+
+        const response = await fetch("/views/datenvoimail/"+row.NomFacture);
+        const results = await response.json();
+        console.log(results);
+        if (results.length >0){
+            detail[0].innerHTML = [...results].map(
+                function(result, index) {
+                    return `<p> <strong>Mail envoyé le: </strong> ${result["DateEnvoi"]} </p> `
+                }).join("")
+        }
+        else{
+            detail[0].innerHTML =  `<p> <strong>Aucun mail n'a encore été envoyé </strong> </p> `
+        }
+       
+
+
+});
+
+
+    function actionFormatter(value, row){
+        return row.NomFacture ? `<a href="/ui/facturePDF/${row.NomFacture}" target="_blank" class="btn btn-sm btn-info"><i class="fas fa-eye"></i></a>` : null;
+    }
+
+    function actionMail(value, row){
+        return  ` <input type="checkbox" id="Envoyer" name="${row.NomFacture}" value="Envoyer"><label for="Envoyer"></label>`
+    }
+
+    $("#signalerErreur").click(function(event){
+        $("body").html2canvas({
+            onrendered: function(canvas) {
+                var img = canvas.toDataURL();
+                console.log(img);
+                $('<img>',{src:img, id:'ImageErreur', style:'display:none' }).appendTo($('body'));
+
+            }
+        })
+
+        setTimeout(function(){$("#modalErreur").modal("show");},500);
+    });
+
+    $('#EnvoiErreur').click(function(event){
+        const img = document.getElementById("ImageErreur");
+        const src = img.getAttribute('src');
+        const message = document.getElementById("description").value;
+       
+
+        $.ajax({
+
+            url:'/views/signalementErreur',
+            data:{image:src, messageErreur:message, urlErreur:document.location.href},
+            cache:false,
+            type:'POST',
+            success: function( data ) {
+                $("#Loader").show();
+                bootbox.alert({
+                    message: "le message a bien été transmis",
+                    centerVertical: true,
+                    size: 'small',
+                    callback: function () {
+                        location.reload();
+                    }
+                });
+            }
+        });
+    });
+
+
+    // html2canvas($('#div'), {
+    //     onrendered: function(canvas) {
+    //         var img = canvas.toDataURL()
+    //         window.open(img);
+    //     }
+    // });
+        // event.preventDefault();
+        // $("body").html2canvas({
+        //     onrendered: function(canvas) {
+        //         var div = document.createElement('div');
+        //         var message = document.createElement('input');
+        //         var label = document.createElement("label");
+        //         var envoyer = document.createElement('button');
+        //         envoyer.setAttribute('id', 'envoyer');
+        //         envoyer.setAttribute('class',"btn btn-primary ");
+        //         message.setAttribute("id", "message");
+        //         label.setAttribute("for", "message");
+
+        //         var img = canvas.toDataURL();
+        //         bootbox.alert({
+		// 		message: $('<input>',{type:'text'}).appendTo($('body')),
+		// 		centerVertical: true,
+		// 		size: 'large'
+        //         })
+        //         $.ajax({
+		// 		url:'/views/signalementErreur',
+		// 		data:{image:img},
+		// 		cache:false,
+		// 		type:'POST',
+		// 		success: function( data ) {
+		// 			$("#Loader").show();
+		// 			bootbox.alert({
+		// 				message: "le mail a bien été envoyé",
+		// 				centerVertical: true,
+		// 				size: 'small',
+		// 				callback: function () {
+		// 					location.reload();
+		// 				}
+		// 			});
+		// 		}
+		// 	});
+        //     }
+        // });
+    
+
+    $("#EnvoiForm").click(function(e) {
+
+        e.preventDefault();
+        $("#form").submit();
+
+    });
+
+    $("#Deconnexion").click(function(e) {
+
+        e.preventDefault();
+        $("#form").submit();
+
+    });
+
+    $('#SendMasse').on('click',function(event){
+
+		var NomFactureEnvoi = [];
+		var $table = $('#datatable-listeFactures');
+		var data = $table.bootstrapTable('getSelections');
+        var ids = $.map(data, function (item) {
+			NomFactureEnvoi.push(item.NomFacture);
+		});
+
+        if ( NomFactureEnvoi.length >=1 ) {
+			var Liste =NomFactureEnvoi.join(',');
+
+			$.ajax({
+				url:'/views/EnvoiMasseFactureEmail',
+				data:{ListePourGeneration:Liste},
+				cache:false,
+				type:'POST',
+				success: function( data ) {
+					$("#Loader").show();
+					bootbox.alert({
+						message: "le mail a bien été envoyé",
+						centerVertical: true,
+						size: 'small',
+						callback: function () {
+							location.reload();
+						}
+					});
+				}
+			});
+		}
+		else {
+			bootbox.alert({
+				message: "Merci de cocher au moins une case pour la génération !",
+				centerVertical: true,
+				size: 'small'
+			});
+		}
+    });
+
+</script>
+</html>
